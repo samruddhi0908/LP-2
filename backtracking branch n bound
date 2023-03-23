@@ -1,0 +1,73 @@
+class Node:
+    def __init__(self, state, constraints):
+        self.state = state
+        self.constraints = constraints
+        self.children = []
+        
+    def expand(self):
+        for i in range(len(self.state)):
+            for j in range(len(self.state)):
+                if self.state[i] != j:
+                    child_state = list(self.state)
+                    child_state[i] = j
+                    child = Node(child_state, self.constraints)
+                    if child.is_consistent():
+                        self.children.append(child)
+                        
+    def is_consistent(self):
+        for i in range(len(self.state)):
+            for j in range(i + 1, len(self.state)):
+                if self.state[i] == self.state[j]:
+                    return False
+                if abs(self.state[i] - self.state[j]) == j - i:
+                    return False
+                if (i, j) in self.constraints:
+                    if self.state[i] >= self.state[j]:
+                        return False
+        return True
+    
+def backtracking(node):
+    if not node.is_consistent():
+        return False
+    if len(node.state) == 0:
+        return node.state
+    node.expand()
+    for child in node.children:
+        result = backtracking(child)
+        if result:
+            return result
+    return False
+    
+def branch_and_bound(node):
+    queue = [node]
+    while queue:
+        node = queue.pop(0)
+        if not node.is_consistent():
+            continue
+        if len(node.state) == 0:
+            return node.state
+        node.expand()
+        queue.extend(node.children)
+        queue.sort(key=lambda x: len(x.children))
+    return False
+
+n = 8
+constraints = [(i, j) for i in range(n) for j in range(i)]
+initial_state = [0] * n
+root = Node(initial_state, constraints)
+
+print("Backtracking solution:")
+print(backtracking(root))
+
+print("Branch and Bound solution:")
+print(branch_and_bound(root))
+
+OUTPUT:-
+Backtracking solution:
+False
+Branch and Bound solution:
+False
+
+
+...Program finished with exit code 0
+Press ENTER to exit console.
