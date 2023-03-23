@@ -1,0 +1,56 @@
+import random
+
+# Define the chatbot's responses
+responses = {
+    "greeting": ["Hello! Welcome to our online store.", "Hi there! How can I help you today?"],
+    "goodbye": ["Thanks for visiting our store. Have a great day!", "Goodbye! Come back soon."],
+    "product_inquiry": ["We have a wide range of clothing items available. What are you looking for?", 
+                        "Which type of clothing are you interested in?"],
+    "payment": ["We accept all major credit cards, as well as PayPal and Apple Pay.", 
+                "You can pay with a credit card, PayPal, or Apple Pay."],
+    "shipping": ["We offer free standard shipping for all orders over $50. Expedited shipping is also available for an additional fee.", 
+                 "Shipping is free for orders over $50. You can also choose expedited shipping for a faster delivery."],
+    "unknown": ["I'm sorry, I didn't understand that. Could you please rephrase your question?", 
+                "I'm not sure what you mean. Could you please provide more information?"]
+}
+
+# Define a function to handle the chatbot's responses
+def respond(query):
+    if "hello" in query.lower() or "hi" in query.lower():
+        return random.choice(responses["greeting"])
+    elif "goodbye" in query.lower() or "bye" in query.lower():
+        return random.choice(responses["goodbye"])
+    elif "product" in query.lower() or "clothing" in query.lower():
+        return random.choice(responses["product_inquiry"])
+    elif "payment" in query.lower() or "pay" in query.lower() or "card" in query.lower() or "paypal" in query.lower() or "apple" in query.lower():
+        return random.choice(responses["payment"])
+    elif "shipping" in query.lower() or "ship" in query.lower() or "delivery" in query.lower() or "expedited" in query.lower() or "standard" in query.lower():
+        return random.choice(responses["shipping"])
+    else:
+        return random.choice(responses["unknown"])
+
+# Start the chatbot
+print("Welcome to our online store. How can I help you today?")
+
+while True:
+    query = input("You: ")
+    response = respond(query)
+    print("Bot:", response)
+    
+    
+   
+OUTPUT:-
+Welcome to our online store. How can I help you today?
+You: hi   
+Bot: Hello! Welcome to our online store.
+You: can you give me the information about the products
+Bot: We have a wide range of clothing items available. What are you looking for?
+You: saree
+Bot: I'm not sure what you mean. Could you please provide more information?
+You: jeans
+Bot: I'm not sure what you mean. Could you please provide more information?
+You: payment
+Bot: We accept all major credit cards, as well as PayPal and Apple Pay.
+You: apple pay
+Bot: You can pay with a credit card, PayPal, or Apple Pay.
+You: 
